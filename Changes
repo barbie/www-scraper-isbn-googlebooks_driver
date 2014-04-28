@@ -1,4 +1,7 @@
-Revision history for Perl extension WWW-Scraper-ISBN-GoogleBooks_Driver.
+Revision history for WWW-Scraper-ISBN-GoogleBooks_Driver
+========================================================
+
+        - added git repository links to metadata.
 
 0.18    2013-07-07
         - added support for Austrian pages.
