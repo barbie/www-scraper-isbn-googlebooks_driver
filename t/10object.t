@@ -62,11 +62,7 @@ SKIP: {
     my $record;
 
     eval { $record = $scraper->search($isbn); };
-    if($record->found) {
-        ok(0,'Unexpectedly found a non-existent book');
-    } else {
-        like($record->error,qr/Invalid ISBN specified/);
-    }
+    like($@,qr/Invalid ISBN specified/);
 
     SKIP: {
         skip "Language not supported", $tests-2
