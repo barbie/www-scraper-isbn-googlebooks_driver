@@ -102,10 +102,16 @@ sub search {
 	$self->found(0);
 	$self->book(undef);
 
+    # validate and convert into EAN13 format
+    my $ean = $self->convert_to_ean13($isbn);
+    return $self->handler("Invalid ISBN specified")   
+        if(!$ean || (length $isbn == 13 && $isbn ne $ean)
+                 || (length $isbn == 10 && $isbn ne $self->convert_to_isbn10($ean)));
+
 	my $mech = WWW::Mechanize->new();
     $mech->agent_alias( 'Linux Mozilla' );
 
-    eval { $mech->get( SEARCH . $isbn ) };
+    eval { $mech->get( SEARCH . $ean ) };
     return $self->handler("GoogleBooks website appears to be unavailable.")
 	    if($@ || !$mech->success() || !$mech->content());
 
