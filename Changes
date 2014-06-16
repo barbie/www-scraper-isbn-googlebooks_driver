@@ -1,6 +1,8 @@
 Revision history for WWW-Scraper-ISBN-GoogleBooks_Driver
 ========================================================
 
+        - added support for Czech Republic pages.
+
 0.22    2014-06-16
         - fixed distribution name in META.
         - upgrade to WWW-Scraper-ISBN-1.00.

@@ -44,6 +44,7 @@ use constant	OZ2G    => 28.3495231;  # number of grams in an ounce (oz)
 use constant	IN2MM   => 25.4;        # number of inches in a millimetre (mm)
 
 my %LANG = (
+    'cz' => { Publisher => 'Vydavatel',     Author => 'Autor',          Title => 'Titul',   Length => 'Délka',      Pages => 'Počet stran: ' },
     'de' => { Publisher => 'Verlag',        Author => 'Autor',          Title => 'Titel',   Length => qr{L.+nge},   Pages => 'Seiten' },
     'en' => { Publisher => 'Publisher',     Author => 'Author',         Title => 'Title',   Length => 'Length',     Pages => 'pages'  },
     'fr' => { Publisher => '.+diteur',      Author => 'Auteur',         Title => 'Titre',   Length => 'Longueur',   Pages => 'pages'  },
@@ -150,12 +151,12 @@ sub search {
 #print STDERR "\n# html=[$html]\n";
 
     $data->{url} = $mech->uri();
+    my ($ccTLD) = $data->{url} =~ m{^http://[.\w]+\.google\.(\w\w)\b};
+
     my $lang = 'en';                                                                # English (default)
     $lang = 'de'    if($data->{url} =~ m{^http://[.\w]+\.google\.(de|ch|at)\b});    # German
     $lang = 'iw'    if($data->{url} =~ m{^http://[.\w]+\.google\.co\.il\b});        # Hebrew
-    $lang = 'fr'    if($data->{url} =~ m{^http://[.\w]+\.google\.(fr)\b});          # French
-    $lang = 'fi'    if($data->{url} =~ m{^http://[.\w]+\.google\.(fi)\b});          # Finnish
-    $lang = 'nl'    if($data->{url} =~ m{^http://[.\w]+\.google\.(nl)\b});          # Dutch
+    $lang = $ccTLD  if($LANG{$ccTLD});                                              # we have a ccTLD translation
 
 	return $self->handler("Language '".uc $lang."'not currently supported, patches welcome.")
 		if($lang =~ m!xx!);
