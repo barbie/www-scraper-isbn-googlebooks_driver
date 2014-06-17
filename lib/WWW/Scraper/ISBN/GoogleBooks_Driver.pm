@@ -51,11 +51,12 @@ my %LANG = (
     'fi' => { Publisher => 'Kustantaja',    Author => 'Kirjoittaja',    Title => 'Otsikko', Length => 'Pituus',     Pages => 'sivua'  },
     'nl' => { Publisher => 'Uitgever',      Author => 'Auteur',         Title => 'Titel',   Length => 'Lengte',     Pages => q[pagina's]  },
     'md' => { Publisher => 'Editor',        Author => 'Autor',          Title => 'Titlu',   Length => 'Lungime',    Pages => 'pagini'  },
-    'ru' => { Publisher => 'Издатель',      Author => 'Автор',          Title => 'Название',    
-                                                                                            Length => 'Количество страниц',     
-                                                                                                                    Pages => 'Всего страниц:'  },
-    'iw' => { Publisher => '\\x\{5d4\}\\x\{5d5\}\\x\{5e6\}\\x\{5d0\}\\x\{5d4\}', 
-                                            Author => 'Author',         Title => 'Title',   Length => '\\x\{5d0\}\\x\{5d5\}\\x\{5e8\}\\x\{5da\}', 
+    'ru' => { Publisher => 'Издатель|\\x\{418\}\\x\{437\}\\x\{434\}\\x\{430\}\\x\{442\}\\x\{435\}\\x\{43b\}\\x\{44c\}',
+                                            Author => 'Автор',          Title => 'Название',
+                                                                                            Length => 'Количество страниц|\\x\{41a\}\\x\{43e\}\\x\{43b\}\\x\{438\}\\x\{447\}\\x\{435\}\\x\{441\}\\x\{442\}\\x\{432\}\\x\{43e\} \\x\{441\}\\x\{442\}\\x\{440\}\\x\{430\}\\x\{43d\}\\x\{438\}\\x\{446\}',
+                                                                                                                    Pages => 'Всего страниц:|\\x\{412\}\\x\{441\}\\x\{435\}\\x\{433\}\\x\{43e\} \\x\{441\}\\x\{442\}\\x\{440\}\\x\{430\}\\x\{43d\}\\x\{438\}\\x\{446\}:'  },
+    'iw' => { Publisher => '\\x\{5d4\}\\x\{5d5\}\\x\{5e6\}\\x\{5d0\}\\x\{5d4\}',
+                                            Author => 'Author',         Title => 'Title',   Length => '\\x\{5d0\}\\x\{5d5\}\\x\{5e8\}\\x\{5da\}',
                                                                                                                     Pages => '\\x\{5e2\}\\x\{5de\}\\x\{5d5\}\\x\{5d3\}\\x\{5d9\}\\x\{5dd\}'  }
 );
 
@@ -70,7 +71,7 @@ my %LANG = (
 
 =item C<search>
 
-Creates a query string, then passes the appropriate form fields to the 
+Creates a query string, then passes the appropriate form fields to the
 GoogleBooks server.
 
 The returned page should be the correct catalog page for that ISBN. If not the
@@ -78,7 +79,7 @@ function returns zero and allows the next driver in the chain to have a go. If
 a valid page is returned, the following fields are returned via the book hash:
 
   isbn          (now returns isbn13)
-  isbn10        
+  isbn10
   isbn13
   ean13         (industry name)
   author
@@ -105,7 +106,7 @@ sub search {
 
     # validate and convert into EAN13 format
     my $ean = $self->convert_to_ean13($isbn);
-    return $self->handler("Invalid ISBN specified")   
+    return $self->handler("Invalid ISBN specified")
         unless($ean);
 
 	my $mech = WWW::Mechanize->new();
@@ -160,9 +161,9 @@ sub search {
 
 	return $self->handler("Language '".uc $lang."'not currently supported, patches welcome.")
 		if($lang =~ m!xx!);
-    
+
     _match( $html, $data, $lang );
-    
+
     # remove HTML tags
     for(qw(author)) {
         next unless(defined $data->{$_});
@@ -248,7 +249,7 @@ sub _match {
     ($data->{pages})                    = $html =~ m!<td class="metadata_label">(?:<span[^>]*>)?$LANG{$lang}->{Length}(?:</span>)?</td><td class="metadata_value">(?:<span[^>]*>)?$LANG{$lang}->{Pages}\s+(\d+)(?:</span>)?</td>!s  unless($data->{pages});
     ($data->{pages})                    = $html =~ m!<td class="metadata_value"><span[^>]*>(\d+) \\x\{5e2\}\\x\{5de\}\\x\{5d5\}\\x\{5d3\}\\x\{5d9\}\\x\{5dd\}</span></td>!si   unless($data->{pages});
 
-    $data->{author} =~ s/"//g;    
+    $data->{author} =~ s/"//g;
     $data->{thumb} = $data->{image};
 }
 
