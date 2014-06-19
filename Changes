@@ -1,6 +1,7 @@
 Revision history for WWW-Scraper-ISBN-GoogleBooks_Driver
 ========================================================
 
+0.23    2014-06-19
         - added support for Czech Republic pages.
         - further patterns for Russian pages.
 
