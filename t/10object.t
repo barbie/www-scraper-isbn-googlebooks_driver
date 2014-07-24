@@ -59,8 +59,7 @@ my %tests = (
 );
 
 my $tests = 0;
-for my $isbn (keys %tests) { $tests += scalar( @{ $tests{$isbn} } ) + 2 }
-
+for my $isbn (keys %tests) { $tests += (scalar( @{ $tests{$isbn} } ) + 2)  * scalar(@TEST_DOMAINS) }
 
 ###########################################################
 
@@ -113,7 +112,7 @@ SKIP: {
 
                     my $fail = 0;
                     my $book = $record->book;
-                    diag("book=[".$book->{book_link}."]");
+                    #diag("book=[".$book->{book_link}."]");
                     for my $test (@{ $tests{$isbn} }) {
                         if($test->[0] eq 'ok')          { $fail += ! ok(       $book->{$test->[1]},             ".. '$test->[1]' found [$isbn]"); } 
                         elsif($test->[0] eq 'is')       { $fail += ! is(       $book->{$test->[1]}, $test->[2], ".. '$test->[1]' found [$isbn]"); } 
