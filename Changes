@@ -1,6 +1,8 @@
 Revision history for WWW-Scraper-ISBN-GoogleBooks_Driver
 ========================================================
 
+        - further patterns for Spanish pages.
+
 0.25    2014-08-03
         - rework of html entity encodings.
         - re-engineered domain used to allow testing of different Google 
