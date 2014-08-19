@@ -5,7 +5,7 @@ use warnings;
 use utf8;
 
 use vars qw($VERSION @ISA);
-$VERSION = '0.25';
+$VERSION = '0.26';
 
 #--------------------------------------------------------------------------
 
