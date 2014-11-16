@@ -22,6 +22,7 @@
         "runtime" : {
             "requires" : {
                 "perl": "5.006",
+                "HTML::Entities": "0",
                 "JSON": "0",
                 "WWW::Mechanize": "1.60",
                 "WWW::Scraper::ISBN": "1.00",
