@@ -169,7 +169,7 @@ sub search {
     my $lang = 'en';                                                                # English (default)
     $lang = 'de'    if($data->{url} =~ m{^http://[.\w]+\.google\.(de|ch|at)\b});    # German
     $lang = 'iw'    if($data->{url} =~ m{^http://[.\w]+\.google\.co\.il\b});        # Hebrew
-    $lang = $ccTLD  if($LANG{$ccTLD});                                              # we have a ccTLD translation
+    $lang = $ccTLD  if($ccTLD && $LANG{$ccTLD});                                    # we have a ccTLD translation
 
 	return $self->handler("Language '".uc $lang."'not currently supported, patches welcome.")
 		if($lang =~ m!xx!);
