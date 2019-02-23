@@ -5,7 +5,7 @@ use warnings;
 use utf8;
 
 use vars qw($VERSION @ISA);
-$VERSION = '0.30';
+$VERSION = '0.31';
 
 #--------------------------------------------------------------------------
 
@@ -276,13 +276,13 @@ sub _match {
 #print STDERR "\n# " . Dumper($data);
 
     # get other fields
-    ($data->{image})                    = $html =~ m!<div class="bookcover"><img src="([^"]+)"[^>]+id=summary-frontcover[^>]*></div>!i;
-    ($data->{image})                    = $html =~ m!<div class="bookcover"><a[^>]+><img src="([^"]+)"[^>]+id=summary-frontcover[^>]*></a></div>!i  unless($data->{image});
-    ($data->{author})                   = $html =~ m!<td class="metadata_label">(?:<span[^>]*>)?$LANG{$lang}->{Author}(?:</span>)?</td><td class="metadata_value">(.*?)</td>!i;
-    ($data->{author})                   = $html =~ m!<td class="metadata_value"><a class="primary" href=".*?"><span dir=ltr>([^<]+)</span></a></td>!si    unless($data->{author});
-    ($data->{title})                    = $html =~ m!<td class="metadata_label">(?:<span[^>]*>)?$LANG{$lang}->{Title}(?:</span>)?</td><td class="metadata_value">(?:<span[^>]*>)?([^<]+)(?:</span>)?!i;
-    ($data->{title})                    = $html =~ m!<meta name="title" content="([^>]+)"\s*/>! unless($data->{title});
-    ($data->{description})              = $html =~ m!<meta name="description" content="([^>]+)"\s*/>!si;
+    ($data->{image})       = $html =~ m!<div class="bookcover"><img src="([^"]+)"[^>]+id=summary-frontcover[^>]*></div>!i;
+    ($data->{image})       = $html =~ m!<div class="bookcover"><a[^>]+><img src="([^"]+)"[^>]+id=summary-frontcover[^>]*></a></div>!i  unless($data->{image});
+    ($data->{author})      = $html =~ m!<td class="metadata_label">(?:<span[^>]*>)?$LANG{$lang}->{Author}(?:</span>)?</td><td class="metadata_value">(.*?)</td>!i;
+    ($data->{author})      = $html =~ m!<td class="metadata_value"><a class="primary" href=".*?"><span dir=ltr>([^<]+)</span></a></td>!si    unless($data->{author});
+    ($data->{title})       = $html =~ m!<td class="metadata_label">(?:<span[^>]*>)?$LANG{$lang}->{Title}(?:</span>)?</td><td class="metadata_value">(?:<span[^>]*>)?([^<]+)(?:</span>)?!i;
+    ($data->{title})       = $html =~ m!<meta name="title" content="([^>]+)"\s*/>! unless($data->{title});
+    ($data->{description}) = $html =~ m!<meta name="description" content="([^>]+)"\s*/>!si;
 
     $data->{author} =~ s/"//g;
     $data->{thumb} = $data->{image};
@@ -325,7 +325,7 @@ be forthcoming, please feel free to (politely) remind me.
 
 =head1 COPYRIGHT & LICENSE
 
-  Copyright (C) 2010-2015 Barbie for Miss Barbell Productions
+  Copyright (C) 2010-2019 Barbie for Miss Barbell Productions
 
   This distribution is free software; you can redistribute it and/or
   modify it under the Artistic Licence v2.
